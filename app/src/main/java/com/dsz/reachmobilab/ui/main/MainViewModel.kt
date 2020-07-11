@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsz.reachmobilab.domain.Teams
-import com.dsz.reachmobilab.repo.TeamsRepositoryImpl
+import com.dsz.reachmobilab.repo.remote.TeamsRepositoryImpl
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel(), IMainViewModel {

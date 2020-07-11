@@ -1,5 +1,7 @@
 package com.dsz.reachmobilab.domain
 
+import java.io.Serializable
+
 data class Team(
     val idAPIfootball: String,
     val idLeague: String,
@@ -7,8 +9,8 @@ data class Team(
     val idLeague3: String,
     val idLeague4: String,
     val idLeague5: String,
-    val idLeague6: Any,
-    val idLeague7: Any,
+    val idLeague6: String,
+    val idLeague7: String,
     val idSoccerXML: String,
     val idTeam: String,
     val intFormedYear: String,
@@ -16,22 +18,22 @@ data class Team(
     val intStadiumCapacity: String,
     val strAlternate: String,
     val strCountry: String,
-    val strDescriptionCN: Any,
+    val strDescriptionCN: String,
     val strDescriptionDE: String,
     val strDescriptionEN: String,
     val strDescriptionES: String,
     val strDescriptionFR: String,
-    val strDescriptionHU: Any,
-    val strDescriptionIL: Any,
+    val strDescriptionHU: String,
+    val strDescriptionIL: String,
     val strDescriptionIT: String,
     val strDescriptionJP: String,
-    val strDescriptionNL: Any,
+    val strDescriptionNL: String,
     val strDescriptionNO: String,
-    val strDescriptionPL: Any,
+    val strDescriptionPL: String,
     val strDescriptionPT: String,
     val strDescriptionRU: String,
-    val strDescriptionSE: Any,
-    val strDivision: Any,
+    val strDescriptionSE: String,
+    val strDivision: String,
     val strFacebook: String,
     val strGender: String,
     val strInstagram: String,
@@ -41,8 +43,8 @@ data class Team(
     val strLeague3: String,
     val strLeague4: String,
     val strLeague5: String,
-    val strLeague6: Any,
-    val strLeague7: Any,
+    val strLeague6: String,
+    val strLeague7: String,
     val strLocked: String,
     val strManager: String,
     val strRSS: String,
@@ -64,4 +66,4 @@ data class Team(
     val strTwitter: String,
     val strWebsite: String,
     val strYoutube: String
-)
+) : Serializable

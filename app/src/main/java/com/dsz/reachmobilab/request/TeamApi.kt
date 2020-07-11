@@ -13,4 +13,9 @@ interface TeamApi {
         @Query("t") s: String
     ): Teams
 
+    @GET("lookup_all_teams.php")
+    suspend fun getTeamsByLeagueId(
+        @Query("id") id: String
+    ): Teams
+
 }

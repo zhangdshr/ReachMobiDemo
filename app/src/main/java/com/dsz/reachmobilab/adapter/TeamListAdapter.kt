@@ -1,6 +1,5 @@
 package com.dsz.reachmobilab.adapter
 
-import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dsz.reachmobilab.R
 import com.dsz.reachmobilab.domain.Team
-import com.dsz.reachmobilab.domain.Teams
 import kotlinx.android.synthetic.main.layout_team_list_item.view.*
 
 class TeamListAdapter(private val context: Context) :
@@ -20,6 +18,10 @@ class TeamListAdapter(private val context: Context) :
 
     fun submitList(teamList: List<Team>) {
         items = teamList as MutableList<Team>
+    }
+
+    fun clearList() {
+        items.clear()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,6 +43,20 @@ class TeamListAdapter(private val context: Context) :
 
             is TeamViewHolder -> {
                 holder.bind(items.get(position))
+
+                holder.itemView.setOnClickListener {
+                    onItemClickListener?.onItemClick(holder.itemView, position, items[position])
+                }
+
+                holder.itemView.setOnLongClickListener {
+                    onItemClickListener?.onItemLongClick(
+                        holder.itemView,
+                        position,
+                        items[position]
+                    )
+                    true
+                }
+
             }
 
         }
@@ -69,6 +85,17 @@ class TeamListAdapter(private val context: Context) :
             team_country.setText(team.strCountry)
         }
 
+    }
+
+    private lateinit var onItemClickListener: OnItemClickListener
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.onItemClickListener = listener
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(view: View, position: Int, team: Team)
+        fun onItemLongClick(view: View, position: Int, team: Team)
     }
 
 }

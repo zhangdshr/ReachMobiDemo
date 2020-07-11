@@ -6,12 +6,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
 
-    val teamApi: TeamApi by lazy {
+    private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(TeamApi::class.java)
+    }
+
+    val teamApi: TeamApi by lazy {
+        retrofit.create(TeamApi::class.java)
+    }
+
+    val leaguesApi: LeaguesApi by lazy {
+        retrofit.create(LeaguesApi::class.java)
+    }
+
+    val eventsApi: EventApi by lazy {
+        retrofit.create(EventApi::class.java)
     }
 
 }
