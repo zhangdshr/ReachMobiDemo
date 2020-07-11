@@ -7,24 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_teams"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:cardCornerRadius="2dp"
-        app:cardPreventCornerOverlap="false"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline40"
-        tools:layout_editor_absoluteX="0dp">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_teams"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </androidx.cardview.widget.CardView>
+        tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/team_list"
@@ -44,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.17" />
+        app:layout_constraintGuide_begin="110dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -58,6 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintGuide_begin="52dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
