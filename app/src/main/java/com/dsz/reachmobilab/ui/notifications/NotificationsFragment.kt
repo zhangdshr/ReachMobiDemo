@@ -48,7 +48,13 @@ class NotificationsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         notificationsViewModel.teams.observe(viewLifecycleOwner, Observer {
             println("debug teams $it")
-            it?.let { it -> teamListAdapter.submitList(it.teams) }
+
+            if (it.teams.isNullOrEmpty()) {
+                teamListAdapter.clearList()
+            } else {
+                it.teams.let { teams -> teamListAdapter.submitList(teams) }
+            }
+
             teamListAdapter.notifyDataSetChanged()
         })
 
@@ -74,7 +80,7 @@ class NotificationsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             adapter = teamListAdapter
         }
 
-        teamListAdapter?.setOnItemClickListener(object: TeamListAdapter.OnItemClickListener {
+        teamListAdapter?.setOnItemClickListener(object : TeamListAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int, team: Team) {
                 println("debug click $team ")
 

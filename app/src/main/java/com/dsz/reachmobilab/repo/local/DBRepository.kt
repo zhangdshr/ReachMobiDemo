@@ -1,8 +1,6 @@
 package com.dsz.reachmobilab.repo.local
 
 import android.app.Application
-import android.content.Context
-import androidx.lifecycle.LiveData
 import com.dsz.reachmobilab.db.SportDao
 import com.dsz.reachmobilab.db.SportDatabase
 import com.dsz.reachmobilab.db.model.Leagues
