@@ -91,10 +91,33 @@ class LeaguesGridAdapter(private val application: Application) :
                 .into(leaguesImage)
 
             leaguesButton.setOnClickListener {
+
                 CoroutineScope(Dispatchers.IO).launch {
-                    DBRepository.getInstance(application)
-                        .insertLeague(Leagues(country.idLeague, country.strLeague))
+
+                    val len = DBRepository.getInstance(application).getLeagues().size
+
+                    if (len >= 8) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            Toast.makeText(
+                                application as Context,
+                                "You can subscribe at most 8 leagues, paid users can lift the limitation.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        DBRepository.getInstance(application)
+                            .insertLeague(Leagues(country.idLeague, country.strLeague))
+                        CoroutineScope(Dispatchers.Main).launch {
+                            Toast.makeText(
+                                application as Context,
+                                "You subscribe ${country.strLeague} successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
                 }
+
             }
 
         }
