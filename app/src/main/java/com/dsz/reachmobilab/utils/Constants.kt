@@ -18,5 +18,7 @@ class Constants {
         const val BASE_URL = DOMAIN_NAME + API_VERSION + RESPONSE_R + API_KEY
 
         const val URL_SEARCH_TEAMS_BY_NAME = "searchteams.php"
+
+        const val JOB_TIMEOUT = 3000L
     }
 }

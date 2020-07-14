@@ -5,10 +5,13 @@ import androidx.lifecycle.*
 import com.dsz.reachmobilab.db.model.Leagues
 import com.dsz.reachmobilab.domain.Teams
 import com.dsz.reachmobilab.repo.local.DBRepository
+import com.dsz.reachmobilab.repo.remote.EventsRepositoryImpl
 import com.dsz.reachmobilab.repo.remote.TeamsRepositoryImpl
+import com.dsz.reachmobilab.utils.Constants
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 class NotificationsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,8 +23,18 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
 
     fun getTeamsByLeagueId(id: String) {
         viewModelScope.launch {
+
             withContext(IO) {
-                _teams.postValue(TeamsRepositoryImpl.getTeamsByLeagueId(id))
+                val job = withTimeoutOrNull(Constants.JOB_TIMEOUT) {
+                    _teams.postValue(TeamsRepositoryImpl.getTeamsByLeagueId(id))
+                }
+
+                if (job == null) {
+                    println(
+                        "Network request time longer than ${Constants.JOB_TIMEOUT} ms"
+                    )
+                }
+
             }
         }
     }

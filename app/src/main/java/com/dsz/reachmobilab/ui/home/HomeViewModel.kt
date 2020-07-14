@@ -6,9 +6,11 @@ import com.dsz.reachmobilab.db.model.Leagues
 import com.dsz.reachmobilab.domain.Events
 import com.dsz.reachmobilab.repo.local.DBRepository
 import com.dsz.reachmobilab.repo.remote.EventsRepositoryImpl
+import com.dsz.reachmobilab.utils.Constants
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -18,9 +20,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getEventsByLeagueId(id: String) {
         viewModelScope.launch {
+
             withContext(IO) {
-                _events.postValue(EventsRepositoryImpl.getEventsByLeagueId(id))
+
+                val job = withTimeoutOrNull(Constants.JOB_TIMEOUT) {
+                    _events.postValue(EventsRepositoryImpl.getEventsByLeagueId(id))
+                }
+
+                if (job == null) {
+                    println(
+                        "Network request time longer than ${Constants.JOB_TIMEOUT} ms"
+                    )
+                }
             }
+
         }
     }
 
@@ -32,8 +45,18 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getLeagues() {
         viewModelScope.launch {
+
             withContext(IO) {
-                _leagues.postValue(repository.getLeagues())
+
+                val job = withTimeoutOrNull(Constants.JOB_TIMEOUT) {
+                    _leagues.postValue(repository.getLeagues())
+                }
+
+                if (job == null) {
+                    println(
+                        "Network request time longer than ${Constants.JOB_TIMEOUT} ms"
+                    )
+                }
             }
         }
     }
