@@ -7,6 +7,8 @@ import com.dsz.reachmobilab.db.model.Leagues
 import com.dsz.reachmobilab.domain.Events
 import com.dsz.reachmobilab.repo.local.DBRepository
 import com.dsz.reachmobilab.repo.remote.EventsRepositoryImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,7 +21,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getEventsByLeagueId(id: String) {
         viewModelScope.launch {
-            _events.value = EventsRepositoryImpl.getEventsByLeagueId(id)
+            CoroutineScope(IO).launch {
+                _events.postValue(EventsRepositoryImpl.getEventsByLeagueId(id))
+            }
         }
     }
 
@@ -29,7 +33,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getLeagues() {
         viewModelScope.launch {
-            _leagues.value = repository.getLeagues()
+            CoroutineScope(IO).launch {
+                _leagues.postValue(repository.getLeagues())
+            }
         }
     }
 

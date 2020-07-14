@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsz.reachmobilab.domain.Countries
 import com.dsz.reachmobilab.repo.remote.LeaguesRepositoryImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {
@@ -16,7 +18,9 @@ class DashboardViewModel : ViewModel() {
 
     fun searchAllLeaguesByCountry(c: String) {
         viewModelScope.launch {
-            _countries.value = LeaguesRepositoryImpl.searchAllLeaguesByCountry(c)
+            CoroutineScope(IO).launch {
+                _countries.postValue(LeaguesRepositoryImpl.searchAllLeaguesByCountry(c))
+            }
         }
     }
 

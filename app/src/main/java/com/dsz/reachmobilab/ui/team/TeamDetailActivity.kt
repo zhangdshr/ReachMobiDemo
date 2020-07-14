@@ -38,7 +38,7 @@ class TeamDetailActivity : AppCompatActivity() {
         supportActionBar!!.setTitle(team.strTeam)
 
         toolbar.setNavigationOnClickListener {
-            finish()
+            onBackPressed()
         }
 
         val requestOptions = RequestOptions()
