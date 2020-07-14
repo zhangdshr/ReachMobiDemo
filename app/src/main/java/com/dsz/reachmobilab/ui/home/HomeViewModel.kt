@@ -1,19 +1,16 @@
 package com.dsz.reachmobilab.ui.home
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.*
 import com.dsz.reachmobilab.db.model.Leagues
 import com.dsz.reachmobilab.domain.Events
 import com.dsz.reachmobilab.repo.local.DBRepository
 import com.dsz.reachmobilab.repo.remote.EventsRepositoryImpl
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
-
-    private var repository: DBRepository = DBRepository.getInstance(application)
 
     private val _events: MutableLiveData<Events> = MutableLiveData()
 
@@ -21,11 +18,13 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getEventsByLeagueId(id: String) {
         viewModelScope.launch {
-            CoroutineScope(IO).launch {
+            withContext(IO) {
                 _events.postValue(EventsRepositoryImpl.getEventsByLeagueId(id))
             }
         }
     }
+
+    private var repository: DBRepository = DBRepository.getInstance(application)
 
     private var _leagues: MutableLiveData<List<Leagues>> = MutableLiveData()
 
@@ -33,7 +32,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getLeagues() {
         viewModelScope.launch {
-            CoroutineScope(IO).launch {
+            withContext(IO) {
                 _leagues.postValue(repository.getLeagues())
             }
         }

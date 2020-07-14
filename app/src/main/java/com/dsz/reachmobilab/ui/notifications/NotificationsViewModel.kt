@@ -6,9 +6,9 @@ import com.dsz.reachmobilab.db.model.Leagues
 import com.dsz.reachmobilab.domain.Teams
 import com.dsz.reachmobilab.repo.local.DBRepository
 import com.dsz.reachmobilab.repo.remote.TeamsRepositoryImpl
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NotificationsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,8 +20,8 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
 
     fun getTeamsByLeagueId(id: String) {
         viewModelScope.launch {
-            CoroutineScope(IO).launch {
-                _teams.value = TeamsRepositoryImpl.getTeamsByLeagueId(id)
+            withContext(IO) {
+                _teams.postValue(TeamsRepositoryImpl.getTeamsByLeagueId(id))
             }
         }
     }
@@ -32,7 +32,7 @@ class NotificationsViewModel(application: Application) : AndroidViewModel(applic
 
     fun getLeagues() {
         viewModelScope.launch {
-            CoroutineScope(IO).launch {
+            withContext(IO) {
                 _leagues.postValue(repository.getLeagues())
             }
         }

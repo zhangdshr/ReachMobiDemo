@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsz.reachmobilab.domain.Teams
 import com.dsz.reachmobilab.repo.remote.TeamsRepositoryImpl
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel(), IMainViewModel {
 
@@ -18,7 +18,7 @@ class MainViewModel : ViewModel(), IMainViewModel {
 
     override fun searchTeams(s: String) {
         viewModelScope.launch {
-            CoroutineScope(IO).launch {
+            withContext(IO) {
                 _teams.postValue(TeamsRepositoryImpl.searchTeams(s))
             }
         }
